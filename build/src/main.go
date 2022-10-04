@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"github.com/shomali11/slacker"
 	"log"
 	"os"
@@ -11,6 +12,8 @@ func drupalUliCmd(actionID string) func(botCtx slacker.BotContext, request slack
 	return func(botCtx slacker.BotContext, request slacker.Request, response slacker.ResponseWriter) {
 		uri := request.Param("uri")
 		namespace := request.Param("namespace")
+		userName := botCtx.Event().UserName
+		fmt.Println(fmt.Sprintf("[drupal-uli] (%s) %s/%s", userName, uri, namespace))
 		config := getK8sConfig()
 		client := getK8sClient(config)
 		drupalUli, errorMsg := executeDrupalUli(client, config, uri, namespace)
@@ -24,6 +27,7 @@ func drupalUliCmd(actionID string) func(botCtx slacker.BotContext, request slack
 
 func main() {
 	bot := slacker.NewClient(os.Getenv("SLACK_BOT_TOKEN"), os.Getenv("SLACK_APP_TOKEN"))
+
 	bot.Command("drupal-uli {uri} {namespace}", &slacker.CommandDefinition{
 		BlockID: "drupal-uli",
 		Handler: drupalUliCmd("drupal-uli"),
