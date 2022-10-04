@@ -1,0 +1,24 @@
+dockworker:
+  version: '5'
+  application:
+    name: maximilian.lib.unb.ca
+    local:
+      env_passthrough:
+        MAXIMILIAN_SLACK_APP_TOKEN: 'The application level token for the Maximilian Slack app'
+        MAXIMILIAN_SLACK_BOT_TOKEN: 'The server/bot level token for the Maximilian Slack app'
+    project_prefix: MAXIMILIAN
+    upstream_images:
+      - ghcr.io/unb-libraries/base:2.x
+    uuid: 3095
+  deployment:
+    environments:
+      - utility
+  github:
+    repo: maximilian.lib.unb.ca
+    owner: unb-libraries
+  image:
+    push_branches:
+      - utility
+    name: ghcr.io/unb-libraries/maximilian.lib.unb.ca
+    date_tag_image: true
+    repository: ghcr

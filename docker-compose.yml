@@ -1,0 +1,17 @@
+services:
+  maximilian.lib.unb.ca:
+    build:
+      context: .
+    restart: 'no'
+    container_name: maximilian.lib.unb.ca
+    networks:
+      - maximilian.lib.unb.ca
+    environment:
+      - SLACK_APP_TOKEN=${MAXIMILIAN_SLACK_APP_TOKEN}
+      - SLACK_BOT_TOKEN=${MAXIMILIAN_SLACK_BOT_TOKEN}
+    volumes:
+      - ${HOME}/.kube:/root/.kube
+
+networks:
+  maximilian.lib.unb.ca:
+    name: maximilian.lib.unb.ca
