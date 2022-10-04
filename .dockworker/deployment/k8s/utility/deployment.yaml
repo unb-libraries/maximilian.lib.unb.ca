@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: slackBot
+    tier: slack
+    uri: maximilian.lib.unb.ca
+    instance: maximilian.lib.unb.ca
+  name: maximilian-lib-unb-ca
+  namespace: utility
+spec:
+  selector:
+    matchLabels:
+      uri: maximilian.lib.unb.ca
+  replicas: 1
+  revisionHistoryLimit: 0
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: slackBot
+        tier: slack
+        uri: maximilian.lib.unb.ca
+        instance: maximilian.lib.unb.ca
+    spec:
+      serviceAccountName: maximilian
+      nodeSelector:
+        deployenv: dev
+      containers:
+        -
+          env:
+            -
+              name: SLACK_APP_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  key: slack-app-token
+                  name: maximilian
+            -
+              name: SLACK_BOT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  key: slack-bot-token
+                  name: maximilian
+          image: "||DEPLOYMENTIMAGE||"
+          imagePullPolicy: Always
+          name: maximilian-lib-unb-ca
+      priorityClassName: utility-services
+      imagePullSecrets:
+        -
+          name: github-container-registry-auth
+      restartPolicy: Always
