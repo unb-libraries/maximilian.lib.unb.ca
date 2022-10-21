@@ -5,13 +5,13 @@ features:
   app_home:
     home_tab_enabled: false
     messages_tab_enabled: true
-    messages_tab_read_only_enabled: true
+    messages_tab_read_only_enabled: false
   bot_user:
     display_name: Maximilian
     always_online: true
   slash_commands:
     - command: /drupal-uli
-      description: Retrieves a Drupal admin login link
+      description: Retrieves a Drupal site admin ULI link
       usage_hint: bnald.lib.unb.ca prod
       should_escape: false
 oauth_config:

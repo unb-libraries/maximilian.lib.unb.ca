@@ -13,6 +13,9 @@ dockworker:
   deployment:
     environments:
       - utility
+    workflow:
+      source: dockworker-cli
+      type: deployment-workflow
   github:
     repo: maximilian.lib.unb.ca
     owner: unb-libraries
