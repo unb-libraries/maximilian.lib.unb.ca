@@ -11,9 +11,11 @@ import (
 func drupalUliCmd(actionID string) func(botCtx slacker.BotContext, request slacker.Request, response slacker.ResponseWriter) {
 	return func(botCtx slacker.BotContext, request slacker.Request, response slacker.ResponseWriter) {
 		uri := request.Param("uri")
-		namespace := request.Param("namespace")
-		if namespace != "" {
+		namespacePassed := request.Param("namespace")
+		if namespacePassed != "" {
 			namespace := "prod"
+		} else {
+			namespace := namespacePassed
 		}
 		userName := botCtx.Event().UserName
 		fmt.Println(fmt.Sprintf("[drupal-uli] (%s) %s/%s", userName, uri, namespace))
