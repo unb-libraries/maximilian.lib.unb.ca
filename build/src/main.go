@@ -10,7 +10,7 @@ import (
 
 func drupalUliCmd(actionID string) func(botCtx slacker.BotContext, request slacker.Request, response slacker.ResponseWriter) {
 	return func(botCtx slacker.BotContext, request slacker.Request, response slacker.ResponseWriter) {
-		uri := request.StringParam("uri")
+		uri := request.Param("uri")
 		namespace := request.StringParam("namespace", "prod")
 		userName := botCtx.Event().UserName
 		fmt.Println(fmt.Sprintf("[drupal-uli] (%s) %s/%s", userName, uri, namespace))
