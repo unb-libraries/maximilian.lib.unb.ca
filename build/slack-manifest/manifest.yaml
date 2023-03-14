@@ -12,7 +12,7 @@ features:
   slash_commands:
     - command: /drupal-uli
       description: Retrieves a Drupal site admin ULI link
-      usage_hint: bnald.lib.unb.ca prod
+      usage_hint: bnald.lib.unb.ca prod(optional, default=prod) uid(optional, default=1)
       should_escape: false
 oauth_config:
   scopes:

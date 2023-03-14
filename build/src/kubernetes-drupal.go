@@ -6,12 +6,12 @@ import (
 	"k8s.io/client-go/rest"
 )
 
-func executeDrupalUli(client corev1client.CoreV1Interface, config *rest.Config, podUri string, podNamespace string) (string, string) {
+func executeDrupalUli(client corev1client.CoreV1Interface, config *rest.Config, podUri string, podNamespace string, userUid string) (string, string) {
 	podName, errorMsg := getPodNameFromUri(client, podUri, podNamespace)
 	if errorMsg != "" {
 		return "", errorMsg
 	}
-	output, errorMsg, err := executeRemotePodCommand(client, config, podName, podNamespace, "/scripts/drupalUli.sh")
+	output, errorMsg, err := executeRemotePodCommand(client, config, podName, podNamespace, "/scripts/drupalUli.sh " + userUid)
 	if err != nil {
 		fmt.Println(errorMsg)
 		panic(err.Error())
