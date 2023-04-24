@@ -13,8 +13,7 @@ func drupalUliCmd(actionID string) func(botCtx slacker.BotContext, request slack
 		uri := request.Param("uri")
 		namespace := request.StringParam("namespace", "prod")
 		uid := request.StringParam("uid", "1")
-		userName := botCtx.Event().UserName
-		fmt.Println(fmt.Sprintf("[drupal-uli] (%s) %s/%s", userName, uri, namespace))
+		fmt.Println(fmt.Sprintf("[drupal-uli] (%s) %s/%s", uid, uri, namespace))
 		config := getK8sConfig()
 		client := getK8sClient(config)
 		drupalUli, errorMsg := executeDrupalUli(client, config, uri, namespace, uid)
