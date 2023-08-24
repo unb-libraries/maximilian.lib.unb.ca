@@ -67,6 +67,18 @@ func getPodNameFromUri(client corev1client.CoreV1Interface, podUri string, podNa
 	for _, pod := range pods.Items {
 		return pod.GetName(), ""
 	}
+
+	labelSelector := fmt.Sprintf("instance=%s", strings.ReplaceAll(podUri, ".", "-"))
+	pods, err := client.Pods(podNamespace).List(context.TODO(), listOptions)
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	for _, pod := range pods.Items {
+		return pod.GetName(), ""
+	}
+
 	return "", fmt.Sprintf("Error! No pods exist matching [uri=%s, namespace=%s]", podUri, podNamespace)
 }
 
