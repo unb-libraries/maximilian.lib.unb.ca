@@ -14,6 +14,7 @@ import (
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/tools/remotecommand"
 	"os"
+	"strings"
 )
 
 func getK8sConfig() *rest.Config {
@@ -51,7 +52,7 @@ func getInClusterConfig() *rest.Config {
 }
 
 func getPodNameFromUri(client corev1client.CoreV1Interface, podUri string, podNamespace string) (string, string) {
-	labelSelector := fmt.Sprintf("instance=%s", podUri)
+	labelSelector := fmt.Sprintf("app.kubernetes.io/instance=%s", strings.ReplaceAll(podUri, ".", "-"))
 
 	listOptions := metaV1.ListOptions{
 		LabelSelector: labelSelector,
