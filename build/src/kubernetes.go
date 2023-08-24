@@ -69,6 +69,10 @@ func getPodNameFromUri(client corev1client.CoreV1Interface, podUri string, podNa
 	}
 
 	labelSelector = fmt.Sprintf("uri=%s", podUri)
+	listOptions = metaV1.ListOptions{
+		LabelSelector: labelSelector,
+		Limit:         1,
+	}
 	pods, err = client.Pods(podNamespace).List(context.TODO(), listOptions)
 
 	if err != nil {
