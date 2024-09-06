@@ -9,7 +9,6 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -o maximilian .
 
 
 FROM ghcr.io/unb-libraries/base:2.x
-MAINTAINER UNB Libraries <libsupport@unb.ca>
 
 COPY --from=builder /build/maximilian /app/maximilian
 COPY ./build /build
@@ -29,4 +28,5 @@ LABEL ca.unb.lib.generator="go" \
   org.label-schema.vcs-url="https://github.com/unb-libraries/maximilian.lib.unb.ca" \
   org.label-schema.vendor="University of New Brunswick Libraries" \
   org.label-schema.version=$VERSION \
+  org.opencontainers.image.authors="UNB Libraries <libsupport@unb.ca>" \
   org.opencontainers.image.source="https://github.com/unb-libraries/maximilian.lib.unb.ca"
