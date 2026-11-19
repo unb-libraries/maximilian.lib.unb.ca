@@ -1,5 +1,5 @@
 # builder image
-FROM golang:1.18 as builder
+FROM golang:1.27 as builder
 
 COPY /build/src /build
 WORKDIR /build
