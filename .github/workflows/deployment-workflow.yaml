@@ -1,21 +1,26 @@
-name: maximilian.lib.unb.ca
+name: Deploy maximilian.lib.unb.ca
 
 on:
-  pull_request:
   push:
+    branches: [utility]
+  pull_request:
   workflow_dispatch:
 
+concurrency:
+  group: deploy-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  cli:
-    uses: unb-libraries/dockworker-cli/.github/workflows/deployment-workflow.yaml@5.x
+  deploy:
+    uses: unb-libraries/github-workflows/.github/workflows/build-push-deploy-notify.yaml@1.x
     with:
+      branch-env-map: '{"utility":"utility"}'
       deploy-branches: '["utility"]'
+      image-name: 'ghcr.io/unb-libraries/maximilian.lib.unb.ca'
+      k8s-deployment-name: 'maximilian-lib-unb-ca'
+      platforms: 'linux/amd64'
     secrets:
-      DOCKER_CLOUD_ACCESS_TOKEN: ${{ secrets.DOCKER_CLOUD_ACCESS_TOKEN }}
-      DOCKER_CLOUD_USER_NAME: ${{ secrets.DOCKER_CLOUD_USER_NAME }}
-      GH_CONTAINER_REGISTRY_TOKEN: ${{ secrets.GH_CONTAINER_REGISTRY_TOKEN }}
-      GH_CONTAINER_REGISTRY_USER: ${{ secrets.GH_CONTAINER_REGISTRY_USER }}
-      KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-      NEW_RELIC_ACCOUNT_ID: ${{ secrets.NEW_RELIC_ACCOUNT_ID }}
-      NEW_RELIC_API_KEY: ${{ secrets.NEW_RELIC_API_KEY }}
+      KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_DATA }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      GH_CONTAINER_REGISTRY_USER: ${{ secrets.GH_CONTAINER_REGISTRY_USER }}
+      GH_CONTAINER_REGISTRY_TOKEN: ${{ secrets.GH_CONTAINER_REGISTRY_TOKEN }}
