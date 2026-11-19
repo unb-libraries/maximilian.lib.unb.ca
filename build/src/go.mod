@@ -3,7 +3,7 @@ module unb-libraries/maximilian.lib.unb.ca
 go 1.27
 
 require (
-	github.com/shomali11/slacker v1.4.1
+	github.com/slack-io/slacker v0.1.1
 	k8s.io/api v0.37.2
 	k8s.io/apimachinery v0.37.2
 	k8s.io/client-go v0.37.2
@@ -36,14 +36,14 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.3-0.20250322232337-35a7c28c31ee // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
-	github.com/robfig/cron v1.2.0 // indirect
-	github.com/shomali11/commander v0.0.0-20220716022157-b5248c76541a // indirect
-	github.com/shomali11/proper v0.0.0-20180607004733-233a9a872c30 // indirect
-	github.com/slack-go/slack v0.12.1 // indirect
+	github.com/robfig/cron/v3 v3.0.1 // indirect
+	github.com/slack-go/slack v0.36.0 // indirect
+	github.com/slack-io/commander v0.0.0-20231120025847-9fd78b4b2d54 // indirect
+	github.com/slack-io/proper v0.0.0-20231119200853-f78ba4fc878f // indirect
 	github.com/spf13/pflag v1.0.10 // indirect
 	github.com/x448/float16 v0.8.4 // indirect
 	go.yaml.in/yaml/v2 v2.4.4 // indirect
-	go.yaml.in/yaml/v3 v3.0.4 // indirect
+	go.yaml.in/yaml/v3 v3.0.6 // indirect
 	golang.org/x/net v0.57.0 // indirect
 	golang.org/x/oauth2 v0.36.0 // indirect
 	golang.org/x/sys v0.47.0 // indirect

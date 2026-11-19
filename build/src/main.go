@@ -3,34 +3,36 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/shomali11/slacker"
 	"log"
 	"os"
+
+	"github.com/slack-io/slacker"
 )
 
-func drupalUliCmd(actionID string) func(botCtx slacker.BotContext, request slacker.Request, response slacker.ResponseWriter) {
-	return func(botCtx slacker.BotContext, request slacker.Request, response slacker.ResponseWriter) {
-		uri := request.Param("uri")
-		namespace := request.StringParam("namespace", "prod")
-		uid := request.StringParam("uid", "1")
-		fmt.Println(fmt.Sprintf("[drupal-uli] (%s) %s/%s", uid, uri, namespace))
-		config := getK8sConfig()
-		client := getK8sClient(config)
-		drupalUli, errorMsg := executeDrupalUli(client, config, uri, namespace, uid)
-		if errorMsg != "" {
-			response.Reply(errorMsg)
-		} else {
-			response.Reply(formatSlackUliString(drupalUli))
-		}
+func drupalUliCmd(ctx *slacker.CommandContext) {
+	request := ctx.Request()
+	uri := request.Param("uri")
+	namespace := request.StringParam("namespace", "prod")
+	uid := request.StringParam("uid", "1")
+	fmt.Printf("[drupal-uli] (%s) %s/%s\n", uid, uri, namespace)
+	config := getK8sConfig()
+	client := getK8sClient(config)
+	drupalUli, errorMsg := executeDrupalUli(client, config, uri, namespace, uid)
+	if errorMsg != "" {
+		ctx.Response().Reply(errorMsg)
+	} else {
+		ctx.Response().Reply(formatSlackUliString(drupalUli))
 	}
 }
 
 func main() {
 	bot := slacker.NewClient(os.Getenv("SLACK_BOT_TOKEN"), os.Getenv("SLACK_APP_TOKEN"))
 
-	bot.Command("drupal-uli {uri} {namespace} {uid}", &slacker.CommandDefinition{
-		BlockID: "drupal-uli",
-		Handler: drupalUliCmd("drupal-uli"),
+	bot.AddCommand(&slacker.CommandDefinition{
+		Command:     "drupal-uli {uri} {namespace} {uid}",
+		Description: "Retrieves a Drupal site admin ULI link",
+		Examples:    []string{"drupal-uli bnald.lib.unb.ca prod 1"},
+		Handler:     drupalUliCmd,
 	})
 
 	ctx, cancel := context.WithCancel(context.Background())
