@@ -8,7 +8,7 @@ RUN go mod tidy
 RUN CGO_ENABLED=0 GOOS=linux go build -a -o maximilian .
 
 
-FROM ghcr.io/unb-libraries/base:2.x
+FROM ghcr.io/unb-libraries/base:3.24.x
 
 COPY --from=builder /build/maximilian /app/maximilian
 COPY ./build /build

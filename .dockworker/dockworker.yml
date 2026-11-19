@@ -8,7 +8,7 @@ dockworker:
         MAXIMILIAN_SLACK_BOT_TOKEN: 'The server/bot level token for the Maximilian Slack app'
     project_prefix: MAXIMILIAN
     upstream_images:
-      - ghcr.io/unb-libraries/base:2.x
+      - ghcr.io/unb-libraries/base:3.24.x
     uuid: 3095
   deployment:
     environments:
