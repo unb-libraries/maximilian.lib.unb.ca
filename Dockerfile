@@ -16,6 +16,9 @@ COPY ./build /build
 ENTRYPOINT /app/maximilian
 
 # Container metadata.
+ARG BUILD_DATE
+ARG VCS_REF
+ARG VERSION
 LABEL ca.unb.lib.generator="go" \
   org.opencontainers.image.title="maximilian.lib.unb.ca" \
   org.opencontainers.image.description="maximilian.lib.unb.ca is a Slack ChatOps app to interact with the Kubernetes cluster at UNB Libraries." \
